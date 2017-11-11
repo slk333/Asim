@@ -1,6 +1,7 @@
 import Foundation
 
-enum ShipName{
+enum ShipName:String{
+    
     case lightFighter
     case heavyFighter
     case battleShip
@@ -15,12 +16,12 @@ struct Ship{
     let attack:Int
     var shield:Int
     var structure:Int
-    var canExplode:Bool
+    var willExplode:Bool
     let completeShield:Int!
     let completeStructure:Int!
     
     init(_ shipName:ShipName){
-        canExplode = false
+        willExplode = false
         switch shipName{
         case .lightFighter:
             name = .lightFighter
@@ -83,15 +84,18 @@ struct Ship{
             return nil
         case .cruiser:
             if ship.name == .lightFighter{return 6}
+            return nil
         case .destroyer:
             if ship.name == .battleCruiser{return 2}
+            return nil
         case .battleCruiser:
             if ship.name == .battleShip{return 7}
             if ship.name == .cruiser{return 4}
             if ship.name == .heavyFighter{return 3}
+            return nil
         }
         
- fatalError()
+
     
     }
     

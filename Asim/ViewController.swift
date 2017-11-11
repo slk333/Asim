@@ -1,101 +1,137 @@
 import UIKit
 
 class ViewController: UIViewController {
-var numberOfSim = 1
+    @IBOutlet weak var aLF:UITextField!
+    @IBOutlet weak var aHF:UITextField!
+    @IBOutlet weak var aCR:UITextField!
+    @IBOutlet weak var aBS:UITextField!
+    @IBOutlet weak var aBC:UITextField!
+    @IBOutlet weak var aBB:UITextField!
+    @IBOutlet weak var aDE:UITextField!
     
+    @IBOutlet weak var dLF:UITextField!
+    @IBOutlet weak var dHF:UITextField!
+    @IBOutlet weak var dCR:UITextField!
+    @IBOutlet weak var dBS:UITextField!
+    @IBOutlet weak var dBC:UITextField!
+    @IBOutlet weak var dBB:UITextField!
+    @IBOutlet weak var dDE:UITextField!
     
+    @IBOutlet weak var aLFLabel:UILabel!
+    @IBOutlet weak var aHFLabel:UILabel!
+    @IBOutlet weak var aCRLabel:UILabel!
+    @IBOutlet weak var aBSLabel:UILabel!
+    @IBOutlet weak var aBCLabel:UILabel!
+    @IBOutlet weak var aBBLabel:UILabel!
+    @IBOutlet weak var aDELabel:UILabel!
+    
+    @IBOutlet weak var dLFLabel:UILabel!
+    @IBOutlet weak var dHFLabel:UILabel!
+    @IBOutlet weak var dCRLabel:UILabel!
+    @IBOutlet weak var dBSLabel:UILabel!
+    @IBOutlet weak var dBCLabel:UILabel!
+    @IBOutlet weak var dBBLabel:UILabel!
+    @IBOutlet weak var dDELabel:UILabel!
     
     @IBAction func sim(_ sender: Any) {
-        let army1Count = 40
-        let army2Count = 2000
-        var army1 = Array(repeatElement(Ship(.cruiser), count: army1Count))
-        var army2 = Array(repeatElement(Ship(.lightFighter), count: army2Count))
-        var army1RemainingCount = 0
-        var army2RemainingCount = 0
-        print("\n\n\n\n\n\n\n\n\n\n")
-        for _ in 0..<6{
+        let startDate=Date()
         
-            
-            
-            let army1Damaged = armyDamaged(attacker: army2, defenser: army1)
-            let army2Damaged = armyDamaged(attacker: army1, defenser: army2)
-            
-            army1 = armyAfterExplosion(armyDamaged: army1Damaged)
-            army2 = armyAfterExplosion(armyDamaged: army2Damaged)
-            
-            print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
-            
-            /*     for ship in army1{
-             guard ship.structure < ship.completeStructure * 70 / 100 else {continue}
-             print("\(ship.structure)/\(ship.shield)")
-             } */
-            print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
-            
-            /* for ship in army2{
-             guard ship.structure < ship.completeStructure * 70 / 100 else {continue}
-             print("\(ship.structure)/\(ship.shield)")
-             } */
-            
-            // si un protagoniste a zero, break la loop
-            guard army1.count != 0 && army2.count != 0 else{
-                army1RemainingCount = army1.count
-                army2RemainingCount = army2.count
-                break}
-            
-            // remettre les bouclier à fond
-            
-            for (index,ship) in army1.enumerated() {
-                if ship.shield != ship.completeShield{
-                    army1[index].shield = ship.completeShield
-                }
-            }
-            for (index,ship) in army2.enumerated() {
-                if ship.shield != ship.completeShield{
-                    army2[index].shield = ship.completeShield
-                }
-            }
-            
-            for i in 0..<army1.count{
-                army1[i].canExplode = false
-            }
-            for i in 0..<army2.count{
-                army2[i].canExplode = false
-            }
-            
-            
-            
-            
-            // fin du round
-            
-        } // fin du combat
         
-    }
+        var army1 = [Ship]()
+        var army2 = [Ship]()
+        
+      
+        army1.append(contentsOf:Array(repeatElement(Ship(.lightFighter), count: Int(aLF.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.heavyFighter), count: Int(aHF.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.cruiser), count: Int(aCR.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.battleShip), count: Int(aBS.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.battleCruiser), count: Int(aBC.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.bomber), count: Int(aBB.text ?? String(0)) ?? 0)))
+        army1.append(contentsOf:Array(repeatElement(Ship(.destroyer), count: Int(aDE.text ?? String(0)) ?? 0)))
+        
+        
+        army2.append(contentsOf:Array(repeatElement(Ship(.lightFighter), count: Int(dLF.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.heavyFighter), count: Int(dHF.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.cruiser), count: Int(dCR.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.battleShip), count: Int(dBS.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.battleCruiser), count: Int(dBC.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.bomber), count: Int(dBB.text ?? String(0)) ?? 0)))
+        army2.append(contentsOf:Array(repeatElement(Ship(.destroyer), count: Int(dDE.text ?? String(0)) ?? 0)))
+        
+        let (army1AfterSim,army2AfterSim) = Asim.sim(army1: army1, army2: army2)
+        print("\n")
+        aLFLabel.text = String(army1AfterSim.lf)
+        aHFLabel.text = String(army1AfterSim.hf)
+        aCRLabel.text = String(army1AfterSim.cr)
+        aBSLabel.text = String(army1AfterSim.bs)
+        aBCLabel.text = String(army1AfterSim.bc)
+        aBBLabel.text = String(army1AfterSim.bb)
+        aDELabel.text = String(army1AfterSim.de)
+        
+        dLFLabel.text = String(army2AfterSim.lf)
+        dHFLabel.text = String(army2AfterSim.hf)
+        dCRLabel.text = String(army2AfterSim.cr)
+        dBSLabel.text = String(army2AfterSim.bs)
+        dBCLabel.text = String(army2AfterSim.bc)
+        dBBLabel.text = String(army2AfterSim.bb)
+        dDELabel.text = String(army2AfterSim.de)
+        
+        
+        
+        
+        
+        print("\(army1AfterSim.lf) lf")
+        print("\(army1AfterSim.hf) hf")
+        print("\(army1AfterSim.cr) cr")
+        print("\(army1AfterSim.bs) bs")
+        print("\(army1AfterSim.bc) bc")
+        print("\(army1AfterSim.bb) bb")
+        print("\(army1AfterSim.de) de")
+        print("\n")
+        print("\n")
+        print("\(army2AfterSim.lf) lf")
+        print("\(army2AfterSim.hf) hf")
+        print("\(army2AfterSim.cr) cr")
+        print("\(army2AfterSim.bs) bs")
+        print("\(army2AfterSim.bc) bc")
+        print("\(army2AfterSim.bb) bb")
+        print("\(army2AfterSim.de) de")
+        print("\n")
+        
+        
+        // log les détails de chaque armée après sim
+        
+   /*     print("\(army1AfterSim.filter{$0.name == .lightFighter}.count) \(ShipName.lightFighter.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .heavyFighter}.count) \(ShipName.heavyFighter.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .cruiser}.count) \(ShipName.cruiser.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .battleShip}.count) \(ShipName.battleShip.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .battleCruiser}.count) \(ShipName.battleCruiser.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .bomber}.count) \(ShipName.bomber.rawValue)")
+        print("\(army1AfterSim.filter{$0.name == .destroyer}.count) \(ShipName.destroyer.rawValue)")
+        
+        print("\(army2AfterSim.filter{$0.name == .lightFighter}.count) \(ShipName.lightFighter.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .heavyFighter}.count) \(ShipName.heavyFighter.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .cruiser}.count) \(ShipName.cruiser.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .battleShip}.count) \(ShipName.battleShip.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .battleCruiser}.count) \(ShipName.battleCruiser.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .bomber}.count) \(ShipName.bomber.rawValue)")
+        print("\(army2AfterSim.filter{$0.name == .destroyer}.count) \(ShipName.destroyer.rawValue)")
+        */
+        
+        let endDate=Date()
+        let interval = endDate.timeIntervalSince(startDate)
+        print(interval)
+        
+    } // fin de l'action du bouton
     
-   
+    
     
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-     
+        
     } // end of view did load
-
-  
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-
 }
 
