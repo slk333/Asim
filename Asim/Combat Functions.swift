@@ -1,17 +1,17 @@
 import Foundation
 func randomInteger(cap:Int)->Int{
     
-     return Int(arc4random()) % cap
+     return Int(arc4random_uniform(UInt32(cap)))
 }
 
 func rand2()->Int{
-    return Int(arc4random_uniform(UInt32.max) % 100)
+    return Int(arc4random_uniform(100))
 }
 
+let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
 
-
-func sim(numberOfSim:Int=20,army1:[Ship],army2:[Ship])->((lf:Int,hf:Int,cr:Int,bs:Int,bc:Int,bb:Int,de:Int),(lf:Int,hf:Int,cr:Int,bs:Int,bc:Int,bb:Int,de:Int)){
+func sim(numberOfSim:Int=12,army1:[Ship],army2:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
     var army1Result=[Int]()
     var army2Result=[Int]()
@@ -26,15 +26,24 @@ func sim(numberOfSim:Int=20,army1:[Ship],army2:[Ship])->((lf:Int,hf:Int,cr:Int,b
     
     
     
-    let army1Count = army1.count
-    let army2Count = army2.count
+  //  let army1Count = army1.count
+  //  let army2Count = army2.count
+    let dispatchGroup = DispatchGroup()
     
-    simulations: for _ in 0..<numberOfSim{
+    simulations: for i in 0..<numberOfSim{
         // début de la simulation, on reinitialise les deux armées
+        
+        dispatchGroup.enter()
+        
+        
+        DispatchQueue.global().async {
+       
+      
         var army1 = army1
         var army2 = army2
     
-    combat: for _ in 0..<6{
+    combat: for round in 0..<6{
+        print("round: \(round)")
         
         army1 = armyDamaged(attacker: army2, defenser: army1)
         army2 = armyDamaged(attacker: army1, defenser: army2)
@@ -51,11 +60,19 @@ func sim(numberOfSim:Int=20,army1:[Ship],army2:[Ship])->((lf:Int,hf:Int,cr:Int,b
         
         // fin du round
         
-    } // fin du combat n
+    }// fin du combat n
+            
+            
+        
+        
         // log le résultat du combat
-    print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
-    print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
-        print("\n")
+  //  print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
+//    print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
+            
+            mySerialQueue.async {
+                
+            
+        print(i)
         // enregistrer le résultat du combat n
         army1Result.append(army1.count)
         army2Result.append(army2.count)
@@ -70,13 +87,20 @@ func sim(numberOfSim:Int=20,army1:[Ship],army2:[Ship])->((lf:Int,hf:Int,cr:Int,b
             army2DictionaryResult[shipName]! += numberOfShip
             army2.removeSubrange(0..<numberOfShip)
         }
-        
+           dispatchGroup.leave()
+                print("finished adding to dictionary")
+                
+            } // fin de l'opération à executer séquentiellement
+            print("finished sim, but not adding to dictionary")
        
         
+         } // fin du du dispatch d'un combat
         
         
         
-    } // fin des simulations
+    } // fin du dispatch des combats
+    
+    
     // fonction qui calcule le nombre moyen de vaisseau à partir du résultat de toutes les simulation
     func resultAsTuple(dictionary:[ShipName:Int])->(lf:Int,hf:Int,cr:Int,bs:Int,bc:Int,bb:Int,de:Int){
         let avgDict = dictionary.mapValues{$0/numberOfSim}
@@ -85,13 +109,20 @@ func sim(numberOfSim:Int=20,army1:[Ship],army2:[Ship])->((lf:Int,hf:Int,cr:Int,b
     
     
     
-    print("\n")
-    print(army1Result)
-    print(army2Result)
+   
   
- 
+    dispatchGroup.notify(queue: .main){
+       completion(resultAsTuple(dictionary:army1DictionaryResult),resultAsTuple(dictionary:army2DictionaryResult))
+        print("\n")
+        print(army1Result)
+        print(army2Result)
+    }
+    
+    
+    
+    
     // return les armées en fin de sim
-    return (resultAsTuple(dictionary:army1DictionaryResult),resultAsTuple(dictionary:army2DictionaryResult))
+    return
 }
 
 
@@ -102,6 +133,7 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
     var defenserFighting=defenser
     var attackerFighting=attacker
     var shouldShotAgainShips=[Ship]()
+  
    // shouldShotAgainShips.reserveCapacity(attacker.count)
     
     // tant que l'attacker a encore des vaisseaux à faire tirer, faire tirer les vaisseaux, si tous les vaisseaux de rf ont tirés, attackerFighting sera vide
@@ -110,13 +142,15 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
             // choisir un vaisseau au hasard
             let i = randomInteger(cap: defenser.count)
             var shipAttacked = defenserFighting[i]
+        
             
             
             // roll RAPID FIRE et mettre en file d'attente si RF activé. Le vaisseau attaquera à nouveau lorsque tous les vaisseaux attaquant auront fini d'attaquer.
             if let rf = attackingShip.rapidFireAgainst(ship: shipAttacked){
                 // le vaisseau tirera à nouveau
-                if 10000/(rf*100) <= rand2(){
+                if 100/(rf) <= rand2(){
                     shouldShotAgainShips.append(attackingShip)
+                    // vérifié sur sim
                 }
             }
             
@@ -155,7 +189,7 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
                 // il explosera si il n'arrive pas à dépasser le rand
                 // ce qui arrivera souvent si son coeff est faible
                 defenserFighting[i].willExplode = shipStructureCoeff < rand2()
-                
+                // il s'agit de strictement car le max du rand est 99, donc c'est comme si c'était strict ou égal avec un rand avec pour max 100
             }
             
             
@@ -165,13 +199,11 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
         } // fin de l'attaque de l'armée, le RF n'a pas encoré été effectué
         // dans le cadre du round qui n'est pas fini, on remplace l'armée attaquante par les vaisseaux qui doivent tirer à nouveau, tant qu'il reste des vaisseau qui doivent tirer
         if shouldShotAgainShips.isEmpty{
-            
             break rf
         }
         attackerFighting = shouldShotAgainShips
-        
         shouldShotAgainShips = []
         
-    } // fin de l'attaque de l'armée, le RF a été effectué
+    } // fin de l'attaque de l'armée pour le round, le RF a été effectué
     return defenserFighting
 }

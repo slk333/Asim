@@ -100,4 +100,6 @@ struct Ship{
     }
     
     
+    
+    
 }
