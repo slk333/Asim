@@ -1,17 +1,10 @@
 import Foundation
-func randomInteger(cap:Int)->Int{
-    
-     return Int(arc4random_uniform(UInt32(cap)))
-}
 
-func rand2()->Int{
-    return Int(arc4random_uniform(100))
-}
 
 let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
 
-func sim(numberOfSim:Int=12,army1:[Ship],army2:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
+func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
     var army1Result=[Int]()
     var army2Result=[Int]()
@@ -52,7 +45,7 @@ func sim(numberOfSim:Int=12,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
         army2 = army2.filter{$0.willExplode == false}
         
         // si une armée est détruite, terminer la loop de combat
-        guard army1.count != 0 && army2.count != 0 else{break combat}
+        if army1.isEmpty || army2.isEmpty {break combat}
         
         // remettre les bouclier à fond
         for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
@@ -133,14 +126,16 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
     var defenserFighting=defenser
     var attackerFighting=attacker
     var shouldShotAgainShips=[Ship]()
+    let defenserCount = defenser.count
   
    // shouldShotAgainShips.reserveCapacity(attacker.count)
     
     // tant que l'attacker a encore des vaisseaux à faire tirer, faire tirer les vaisseaux, si tous les vaisseaux de rf ont tirés, attackerFighting sera vide
     rf: while !attackerFighting.isEmpty{
+        
         attacking: for attackingShip in attackerFighting{
             // choisir un vaisseau au hasard
-            let i = randomInteger(cap: defenser.count)
+            let i = Int.random(in: 0..<defenserCount)
             var shipAttacked = defenserFighting[i]
         
             
@@ -148,15 +143,15 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
             // roll RAPID FIRE et mettre en file d'attente si RF activé. Le vaisseau attaquera à nouveau lorsque tous les vaisseaux attaquant auront fini d'attaquer.
             if let rf = attackingShip.rapidFireAgainst(ship: shipAttacked){
                 // le vaisseau tirera à nouveau
-                if 100/(rf) <= rand2(){
+                if 100/(rf) < UInt8.random(in: 1...100){
                     shouldShotAgainShips.append(attackingShip)
                     // vérifié sur sim
                 }
             }
             
             
-            // si le défenseur est déjà programmé pour exploser, passez au vaisseau attaquant suivant
-            guard shipAttacked.willExplode != true else {continue attacking}
+            // si le défenseur est déjà programmé pour exploser, inutile d'appliquer des dégats sur le vaisseau, passez au vaisseau attaquant suivant
+            guard shipAttacked.willExplode == false else {continue attacking}
             
             // si l'attaquant one shot le vaisseau, programmer son explosion, et passer au vaisseau attaquant suivant
             
@@ -188,8 +183,8 @@ func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
             else{
                 // il explosera si il n'arrive pas à dépasser le rand
                 // ce qui arrivera souvent si son coeff est faible
-                defenserFighting[i].willExplode = shipStructureCoeff < rand2()
-                // il s'agit de strictement car le max du rand est 99, donc c'est comme si c'était strict ou égal avec un rand avec pour max 100
+                defenserFighting[i].willExplode = shipStructureCoeff < UInt8.random(in: 1...100)
+                // il faut que le ship puisse survivre si il est à 1%. 1 n'est pas inférieur à 1, mais inférieur au dela
             }
             
             
