@@ -4,7 +4,7 @@ import Foundation
 let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
 
-func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
+func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
     var army1Result=[Int]()
     var army2Result=[Int]()
@@ -13,75 +13,75 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
     
     let shipOrder:[ShipName]=[.lightFighter,.heavyFighter,.cruiser,.battleShip,.battleCruiser,.bomber,.destroyer]
     
- 
     
     
     
-  //  let army1Count = army1.count
-  //  let army2Count = army2.count
+    
+    //  let army1Count = army1.count
+    //  let army2Count = army2.count
     let dispatchGroup = DispatchGroup()
     
     simulations: for i in 0..<numberOfSim{
         // début de la simulation, on reinitialise les deux armées
         
         dispatchGroup.enter()
-        
-        
         DispatchQueue.global().async {
-       
-      
-        var army1 = army1
-        var army2 = army2
-    
-    combat: for round in 0..<6{
-        print("round: \(round)")
-        
-        (army1,army2) = (defenser_Army_After_Round_With(attacker: army2, defenser: army1),defenser_Army_After_Round_With(attacker: army1, defenser: army2))
-        
-        army1 = army1.filter{$0.willExplode == false}
-        army2 = army2.filter{$0.willExplode == false}
-        
-        // si une armée est détruite, terminer la loop de combat
-        if army1.isEmpty || army2.isEmpty {break combat}
-        
-        // remettre les bouclier à fond
-        for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
-        for (index,ship) in army2.enumerated() {army2[index].shield = ship.completeShield}
-        
-        // fin du round
-        
-    }// fin du combat n
             
-        // log le résultat du combat
-  //  print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
-//    print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
+            
+            var army1 = army1Argument
+            var army2 = army2Argument
+            
+            combat: for round in 0..<6{
+                print("round: \(round)")
+                
+                attackerShoots(attacker: army1, defenser: &army2)
+                attackerShoots(attacker: army2, defenser: &army1)
+                
+                
+                army1 = army1.filter{$0.willExplode == false}
+                army2 = army2.filter{$0.willExplode == false}
+                
+                // si une armée est détruite, terminer la loop de combat
+                if army1.isEmpty || army2.isEmpty {break combat}
+                
+                // remettre les bouclier à fond
+                for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
+                for (index,ship) in army2.enumerated() {army2[index].shield = ship.completeShield}
+                
+                // fin du round
+                
+            }// fin du combat n
+            
+            // log le résultat du combat
+            //  print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
+            //    print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
             
             mySerialQueue.async {
                 
-            
-        print(i)
-        // enregistrer le résultat du combat n
-        army1Result.append(army1.count)
-        army2Result.append(army2.count)
-     
-        for shipName in shipOrder{
-            let numberOfShip = army1.prefix{$0.name == shipName}.count
-             army1DictionaryResult[shipName]! += numberOfShip
-            army1.removeSubrange(0..<numberOfShip)
-        }
-for shipName in shipOrder{
-            let numberOfShip = army2.prefix{$0.name == shipName}.count
-            army2DictionaryResult[shipName]! += numberOfShip
-            army2.removeSubrange(0..<numberOfShip)
-        }
-           dispatchGroup.leave()
-                print("finished adding to dictionary")
+                
+                print(i)
+                // enregistrer le résultat du combat n
+                army1Result.append(army1.count)
+                army2Result.append(army2.count)
+                
+                for shipName in shipOrder{
+                    let numberOfShip = army1.prefix{$0.name == shipName}.count
+                    army1DictionaryResult[shipName]! += numberOfShip
+                    army1.removeSubrange(0..<numberOfShip)
+                }
+                for shipName in shipOrder{
+                    let numberOfShip = army2.prefix{$0.name == shipName}.count
+                    army2DictionaryResult[shipName]! += numberOfShip
+                    army2.removeSubrange(0..<numberOfShip)
+                }
+                dispatchGroup.leave()
+                
                 
             } // fin de l'opération à executer séquentiellement
-            print("finished sim, but not adding to dictionary")
-       
-        
-         } // fin du du dispatch d'un combat
+           
+            
+            
+        } // fin du du dispatch d'un combat
         
         
         
@@ -91,15 +91,15 @@ for shipName in shipOrder{
     // fonction qui calcule le nombre moyen de vaisseau à partir du résultat de toutes les simulation
     func resultAsTuple(dictionary:[ShipName:Int])->(lf:Int,hf:Int,cr:Int,bs:Int,bc:Int,bb:Int,de:Int){
         let avgDict = dictionary.mapValues{$0/numberOfSim}
-    return (avgDict[.lightFighter]!,avgDict[.heavyFighter]!,avgDict[.cruiser]!,avgDict[.battleShip]!,avgDict[.battleCruiser]!,avgDict[.bomber]!,avgDict[.destroyer]!)
+        return (avgDict[.lightFighter]!,avgDict[.heavyFighter]!,avgDict[.cruiser]!,avgDict[.battleShip]!,avgDict[.battleCruiser]!,avgDict[.bomber]!,avgDict[.destroyer]!)
     }
     
     
     
-   
-  
+    
+    
     dispatchGroup.notify(queue: .main){
-       completion(resultAsTuple(dictionary:army1DictionaryResult),resultAsTuple(dictionary:army2DictionaryResult))
+        completion(resultAsTuple(dictionary:army1DictionaryResult),resultAsTuple(dictionary:army2DictionaryResult))
         print("\n")
         print(army1Result)
         print(army2Result)
@@ -116,83 +116,79 @@ for shipName in shipOrder{
 
 // l'armée tire sur l'autre, la fonction return l'armée du défenseur, dont les vaisseaux sont marqués avec willExplode ou non
 
-func defenser_Army_After_Round_With(attacker:[Ship],defenser:[Ship])->[Ship]{
-    var defenserFighting=defenser
-    var attackerFighting=attacker
-    var shouldShotAgainShips=[Ship]()
+func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
     let defenserCount = defenser.count
-  
-   // shouldShotAgainShips.reserveCapacity(attacker.count)
     
-    // tant que l'attacker a encore des vaisseaux à faire tirer, faire tirer les vaisseaux, si tous les vaisseaux de rf ont tirés, attackerFighting sera vide
-    rf: while !attackerFighting.isEmpty{
-        
-        attacking: for attackingShip in attackerFighting{
-            // choisir un vaisseau au hasard
+    var rf:Int?
+
+        for attackingShip in attacker{
+        // choisir un vaisseau au hasard
+        individualShipAttack: repeat{
+            
             let i = Int.random(in: 0..<defenserCount)
-            var shipAttacked = defenserFighting[i]
-        
-            
-            
-            // roll RAPID FIRE et mettre en file d'attente si RF activé. Le vaisseau attaquera à nouveau lorsque tous les vaisseaux attaquant auront fini d'attaquer.
-            if let rf = attackingShip.rapidFireAgainst(ship: shipAttacked){
-                // le vaisseau tirera à nouveau
-                if 100/(rf) < UInt8.random(in: 1...100){
-                    shouldShotAgainShips.append(attackingShip)
-                    // vérifié sur sim
-                }
-            }
+            var shipAttacked = defenser[i]
             
             
             // si le défenseur est déjà programmé pour exploser, inutile d'appliquer des dégats sur le vaisseau, passez au vaisseau attaquant suivant
-            guard shipAttacked.willExplode == false else {continue attacking}
+         //   guard shipAttacked.willExplode == false else {continue attacking}
             
             // si l'attaquant one shot le vaisseau, programmer son explosion, et passer au vaisseau attaquant suivant
             
-            guard attackingShip.attack < shipAttacked.structure + shipAttacked.shield else{
+        /*    guard attackingShip.attack < shipAttacked.structure + shipAttacked.shield else{
                 defenserFighting[i].willExplode = true
                 continue attacking
-            }
+            } */
             
-            
-        
-            // si l'attaquant ne oneshot pas, infliger dégats, roll explosion le cas échéant, et passer au vaisseau suivant
+            // si l'attaquant ne oneshot pas, infliger dégats, et roll explosion si coque inférieure à 70%
             
             let remainingAttackForStructure = attackingShip.attack - shipAttacked.shield
-            // si l'attaquant n'inflige que des dégats au bouclier
-            guard remainingAttackForStructure > 0 else{defenserFighting[i].shield -= attackingShip.attack
-                continue attacking
-            }
             
-            //l'attaquant surpasse le bouclier et inflige des dégats à la structure
+            // si l'attaquant n'inflige que des dégats au bouclier (celà ne l'empêchera pas d'exploser si il est déja endommagé)
+            if remainingAttackForStructure <= 0 {
+                // diminuer le bouclier
+                shipAttacked.shield -= attackingShip.attack
+                
+            }
+                
+                // sinon, entamer sa coque directement
+            else{ //l'attaquant surpasse le bouclier et inflige les dégats restant à la structure
+                
                 shipAttacked.shield = 0
                 shipAttacked.structure -= remainingAttackForStructure
-                let shipStructureCoeff = (shipAttacked.structure*100)/(shipAttacked.completeStructure)
-                defenserFighting[i] = shipAttacked
-            // le vaisseau n'est pas vulnérable
-            if shipStructureCoeff > 70 {
-                continue attacking
             }
-            // le vaisseau est vulnérable
-            else{
+            
+            // comme le vaisseau ennemi a été visé par un tir, il peut exploser si sa coque est inférieure ou égale à 70
+            
+            let shipStructureCoeff = (shipAttacked.structure*100)/(shipAttacked.completeStructure)
+           // print("\(shipAttacked.name) has \(shipStructureCoeff) % integrity")
+            defenser[i] = shipAttacked
+            // le vaisseau n'est pas vulnérable
+            if shipStructureCoeff <= 70{
                 // il explosera si il n'arrive pas à dépasser le rand
                 // ce qui arrivera souvent si son coeff est faible
-                defenserFighting[i].willExplode = shipStructureCoeff < UInt8.random(in: 1...100)
+                defenser[i].willExplode = Int.random(in: 1...100) > shipStructureCoeff
                 // il faut que le ship puisse survivre si il est à 1%. 1 n'est pas inférieur à 1, mais inférieur au dela
             }
             
+            rf = attackingShip.rapidFireAgainst(ship: shipAttacked)
+            // si l'attaquant n'a pas de rapidfire, mettre fin à l'attaque individuelle du vaisseau
+         //   if rf == nil{break individualShipAttack}
             
-           
+          
             
+        } // fin du repeat
+            // l'attaquant possède un rapid fire
+            // roll RAPID FIRE
+            // le vaisseau continue d'attaquer tant que le rapid fire roll vrai
+            while Float.random(in: 0...100) > (100/(Float(rf ?? 1)))
+            // si le rf vaut 1, il faut un nombre plus grand que 100, ce qui ne doit pas être possible
+            // si le rf vaut 2, il faut un nombre plus grand que 50 , 6 7 8 9 10. Tandis que 5 4 3 2 1 ne sont pas suffisants
+            // si le rf vaut 200, il faut un nombre plus grand que 100/200, c'est à dire plus grand que 0, or ce sera toujours le cas.
+            // il faut que le roll le plus petit fasse zéro
             
-        } // fin de l'attaque de l'armée, le RF n'a pas encoré été effectué
-        // dans le cadre du round qui n'est pas fini, on remplace l'armée attaquante par les vaisseaux qui doivent tirer à nouveau, tant qu'il reste des vaisseau qui doivent tirer
-        if shouldShotAgainShips.isEmpty{
-            break rf
-        }
-        attackerFighting = shouldShotAgainShips
-        shouldShotAgainShips = []
         
-    } // fin de l'attaque de l'armée pour le round, le RF a été effectué
-    return defenserFighting
+        // fin de la boucle repeat qui matérialise l'attaque individuelle du vaisseau
+        // on passe au vaisseau individuel suivant
+    } // fin de l'attaque de l'armée pour le round
+    return
 }

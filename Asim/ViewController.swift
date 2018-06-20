@@ -59,7 +59,7 @@ class ViewController: UIViewController {
             army2.append(contentsOf:Array(repeatElement(Ship(.destroyer), count: Int(self.dDE.text ?? String(0)) ?? 0)))
         
         DispatchQueue.global().async {
-            Asim.sim(army1: army1, army2: army2){
+            Asim.sim(army1Argument: army1, army2Argument: army2){
                 (army1AfterSim,army2AfterSim) in
                 
                 print("I got there and i have all i need")
