@@ -4,7 +4,7 @@ import Foundation
 let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
 
-func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
+func sim(numberOfSim:Int=1,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
     var army1Result=[Int]()
     var army2Result=[Int]()
@@ -120,17 +120,26 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
     let defenserCount = defenser.count
     
     var rf:Int?
+   
 
         for attackingShip in attacker{
+      //      print("\(attackingShip.name) now attacking")
+           
+          
         // choisir un vaisseau au hasard
         individualShipAttack: repeat{
             
             let i = Int.random(in: 0..<defenserCount)
-            var shipAttacked = defenser[i]
+         //   print("cible le \(defenser[i].name) numéro \(i)")
+            
+            rf = attackingShip.rapidFireAgainst(ship: defenser[i]) ?? 1
+            // si l'attaquant n'a pas de rapidfire, mettre fin à l'attaque individuelle du vaisseau
             
             
             // si le défenseur est déjà programmé pour exploser, inutile d'appliquer des dégats sur le vaisseau, passez au vaisseau attaquant suivant
-         //   guard shipAttacked.willExplode == false else {continue attacking}
+            guard defenser[i].willExplode == false else {
+         //       print("le défenseur selectionné a deja explosé ")
+                continue individualShipAttack}
             
             // si l'attaquant one shot le vaisseau, programmer son explosion, et passer au vaisseau attaquant suivant
             
@@ -141,38 +150,46 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
             
             // si l'attaquant ne oneshot pas, infliger dégats, et roll explosion si coque inférieure à 70%
             
-            let remainingAttackForStructure = attackingShip.attack - shipAttacked.shield
+            let remainingAttackForStructure = attackingShip.attack - defenser[i].shield
+       //     print("\(remainingAttackForStructure) dégats vont s'appliquer sur la coque")
             
             // si l'attaquant n'inflige que des dégats au bouclier (celà ne l'empêchera pas d'exploser si il est déja endommagé)
             if remainingAttackForStructure <= 0 {
                 // diminuer le bouclier
-                shipAttacked.shield -= attackingShip.attack
-                
+                defenser[i].shield -= attackingShip.attack
+        //    print("la coque est intacte et le bouclier du défendeur vaut désormais \(defenser[i].shield)")
             }
                 
                 // sinon, entamer sa coque directement
             else{ //l'attaquant surpasse le bouclier et inflige les dégats restant à la structure
                 
-                shipAttacked.shield = 0
-                shipAttacked.structure -= remainingAttackForStructure
+                defenser[i].shield = 0
+          //       print("le bouclier du défendeur vaut désormais \(defenser[i].shield)")
+                defenser[i].structure -= remainingAttackForStructure
+          //      print("la structure du défendeur vaut désormais \(defenser[i].structure)")
             }
             
             // comme le vaisseau ennemi a été visé par un tir, il peut exploser si sa coque est inférieure ou égale à 70
             
-            let shipStructureCoeff = (shipAttacked.structure*100)/(shipAttacked.completeStructure)
+           
            // print("\(shipAttacked.name) has \(shipStructureCoeff) % integrity")
-            defenser[i] = shipAttacked
+           
             // le vaisseau n'est pas vulnérable
-            if shipStructureCoeff <= 70{
+            
+       /*     print("""
+                la structure est \(defenser[i].structure) comparé à l'original de \(defenser[i].completeStructure!). Le seuil est à \(Int(Float(defenser[i].completeStructure) * 0.70))
+                """)
+ */
+            if defenser[i].structure <= Int(Float(defenser[i].completeStructure) * 0.70){
                 // il explosera si il n'arrive pas à dépasser le rand
                 // ce qui arrivera souvent si son coeff est faible
-                defenser[i].willExplode = Int.random(in: 1...100) > shipStructureCoeff
+             //   print("le vaisseau est en zone de danger")
+                defenser[i].willExplode = defenser[i].completeStructure - defenser[i].structure > Int.random(in: 0..<defenser[i].completeStructure)
                 // il faut que le ship puisse survivre si il est à 1%. 1 n'est pas inférieur à 1, mais inférieur au dela
+             //   print("le vaisseau va exploser : \(defenser[i].willExplode)")
             }
             
-            rf = attackingShip.rapidFireAgainst(ship: shipAttacked)
-            // si l'attaquant n'a pas de rapidfire, mettre fin à l'attaque individuelle du vaisseau
-         //   if rf == nil{break individualShipAttack}
+            
             
           
             
@@ -180,7 +197,7 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
             // l'attaquant possède un rapid fire
             // roll RAPID FIRE
             // le vaisseau continue d'attaquer tant que le rapid fire roll vrai
-            while Float.random(in: 0...100) > (100/(Float(rf ?? 1)))
+            while Int.random(in: 0..<rf!) < rf!-1
             // si le rf vaut 1, il faut un nombre plus grand que 100, ce qui ne doit pas être possible
             // si le rf vaut 2, il faut un nombre plus grand que 50 , 6 7 8 9 10. Tandis que 5 4 3 2 1 ne sont pas suffisants
             // si le rf vaut 200, il faut un nombre plus grand que 100/200, c'est à dire plus grand que 0, or ce sera toujours le cas.
