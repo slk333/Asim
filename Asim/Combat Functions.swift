@@ -8,8 +8,6 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
     
     var army1Result=[Int]()
     var army2Result=[Int]()
-  
-    
     var army1DictionaryResult:[ShipName:Int]=[.lightFighter:0,.heavyFighter:0,.cruiser:0,.battleShip:0,.battleCruiser:0,.bomber:0,.destroyer:0]
     var army2DictionaryResult:[ShipName:Int]=[.lightFighter:0,.heavyFighter:0,.cruiser:0,.battleShip:0,.battleCruiser:0,.bomber:0,.destroyer:0]
     
@@ -38,8 +36,7 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
     combat: for round in 0..<6{
         print("round: \(round)")
         
-        army1 = armyDamaged(attacker: army2, defenser: army1)
-        army2 = armyDamaged(attacker: army1, defenser: army2)
+        (army1,army2) = (defenser_Army_After_Round_With(attacker: army2, defenser: army1),defenser_Army_After_Round_With(attacker: army1, defenser: army2))
         
         army1 = army1.filter{$0.willExplode == false}
         army2 = army2.filter{$0.willExplode == false}
@@ -55,9 +52,6 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
         
     }// fin du combat n
             
-            
-        
-        
         // log le résultat du combat
   //  print("army1 of \(army1Count) \(army1.first?.name ?? .bomber) has \(army1.count) remaining \(army1.first?.name ?? .bomber)")
 //    print("army2 of \(army2Count) \(army2.first?.name ?? .bomber) has \(army2.count) remaining \(army2.first?.name ?? .bomber)")
@@ -75,7 +69,7 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
              army1DictionaryResult[shipName]! += numberOfShip
             army1.removeSubrange(0..<numberOfShip)
         }
-        for shipName in shipOrder{
+for shipName in shipOrder{
             let numberOfShip = army2.prefix{$0.name == shipName}.count
             army2DictionaryResult[shipName]! += numberOfShip
             army2.removeSubrange(0..<numberOfShip)
@@ -122,7 +116,7 @@ func sim(numberOfSim:Int=50,army1:[Ship],army2:[Ship],completion:@escaping((lf: 
 
 // l'armée tire sur l'autre, la fonction return l'armée du défenseur, dont les vaisseaux sont marqués avec willExplode ou non
 
-func armyDamaged(attacker:[Ship],defenser:[Ship])->[Ship]{
+func defenser_Army_After_Round_With(attacker:[Ship],defenser:[Ship])->[Ship]{
     var defenserFighting=defenser
     var attackerFighting=attacker
     var shouldShotAgainShips=[Ship]()

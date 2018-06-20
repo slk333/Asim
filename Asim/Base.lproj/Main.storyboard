@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13528" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_0" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13526"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14252.5"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -19,10 +19,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="z5O-F8-TZS">
-                                <rect key="frame" x="8" y="58" width="155" height="246"/>
+                                <rect key="frame" x="8" y="58" width="154.5" height="246"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="w1O-5O-YRF">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clé" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PMD-IC-PFE">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -43,7 +43,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgU-Ea-2Uj">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="eh4-uz-dwq"/>
                                                 </constraints>
@@ -54,7 +54,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="IQu-Zs-p5v">
-                                        <rect key="frame" x="0.0" y="36" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="36" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pbn-5e-CUH">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -75,7 +75,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NxS-2C-0gp">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="hb3-Mh-4om"/>
                                                 </constraints>
@@ -86,7 +86,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="YOF-DY-IDB">
-                                        <rect key="frame" x="0.0" y="72" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="72" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Yxd-bj-z38">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -107,7 +107,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cu8-Jj-NBo">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="zGM-0j-BJj"/>
                                                 </constraints>
@@ -118,7 +118,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="XQl-fJ-Rf8">
-                                        <rect key="frame" x="0.0" y="108" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="108" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8aH-gh-bp7">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -139,7 +139,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="igh-3U-pcf">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="FIT-Gl-s0z"/>
                                                 </constraints>
@@ -150,7 +150,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="5kE-Ed-LXq">
-                                        <rect key="frame" x="0.0" y="144" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="144" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tra" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="U6S-XQ-OS2">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -171,7 +171,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ato-NE-U72">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="i14-Aa-fRC"/>
                                                 </constraints>
@@ -182,7 +182,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="yzm-jX-Slb">
-                                        <rect key="frame" x="0.0" y="180" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="180" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sg6-Pw-dcf">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -193,7 +193,7 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Op-1i-IB2">
+                                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="3Op-1i-IB2">
                                                 <rect key="frame" x="32" y="0.0" width="65" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="65" id="8Yg-Of-hls"/>
@@ -203,7 +203,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lGW-ZA-qx8">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="M1R-O0-KeL"/>
                                                 </constraints>
@@ -214,7 +214,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="40E-ne-gZP">
-                                        <rect key="frame" x="0.0" y="216" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="216" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dd" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wkb-qO-VMs">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -235,7 +235,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fyy-a6-4dQ">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="cfW-JL-rw5"/>
                                                 </constraints>
@@ -248,10 +248,10 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="6" translatesAutoresizingMaskIntoConstraints="NO" id="4Lj-YK-LDJ">
-                                <rect key="frame" x="165" y="58" width="155" height="246"/>
+                                <rect key="frame" x="165.5" y="58" width="154.5" height="246"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="zKr-oZ-xSn">
-                                        <rect key="frame" x="0.0" y="0.0" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clé" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QPH-bE-gxK">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -272,7 +272,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5zZ-OY-Tfe">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="ljR-9H-4LS"/>
                                                 </constraints>
@@ -283,7 +283,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="5LS-Rw-SJ7">
-                                        <rect key="frame" x="0.0" y="36" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="36" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Yd-V0-w3e">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -304,7 +304,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JjH-DP-5T3">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="Bye-M1-wMh"/>
                                                 </constraints>
@@ -315,7 +315,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="DF8-0q-yMy">
-                                        <rect key="frame" x="0.0" y="72" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="72" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cro" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nzn-r9-a9F">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -336,7 +336,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zth-QR-MMF">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="u9Z-M7-edk"/>
                                                 </constraints>
@@ -347,7 +347,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="mpT-cH-vlz">
-                                        <rect key="frame" x="0.0" y="108" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="108" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Vb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p0D-fh-SK9">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -368,7 +368,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OC8-ho-AiT">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="fvL-15-vRJ"/>
                                                 </constraints>
@@ -379,7 +379,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="TP6-g9-6B4">
-                                        <rect key="frame" x="0.0" y="144" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="144" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tra" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="q2V-7f-i1u">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -400,7 +400,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DlC-cv-nqr">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="d11-e1-ZSo"/>
                                                 </constraints>
@@ -411,7 +411,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="eC5-jh-dT2">
-                                        <rect key="frame" x="0.0" y="180" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="180" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Bb" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbT-hC-5io">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -432,7 +432,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UHw-En-P1y">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="kMh-EB-94l"/>
                                                 </constraints>
@@ -443,7 +443,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="adA-J3-8aJ">
-                                        <rect key="frame" x="0.0" y="216" width="155" height="30"/>
+                                        <rect key="frame" x="0.0" y="216" width="154.5" height="30"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Dd" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L2M-5E-Huz">
                                                 <rect key="frame" x="0.0" y="0.0" width="23" height="30"/>
@@ -464,7 +464,7 @@
                                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" returnKeyType="done" enablesReturnKeyAutomatically="YES"/>
                                             </textField>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xo4-Nx-ifK">
-                                                <rect key="frame" x="106" y="0.0" width="49" height="30"/>
+                                                <rect key="frame" x="106" y="0.0" width="48.5" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="48.5" id="BEu-kx-zZL"/>
                                                 </constraints>
