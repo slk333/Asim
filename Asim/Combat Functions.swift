@@ -4,7 +4,7 @@ import Foundation
 let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
 
-func sim(numberOfSim:Int=1,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
+func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
     var army1Result=[Int]()
     var army2Result=[Int]()
@@ -32,7 +32,7 @@ func sim(numberOfSim:Int=1,army1Argument:[Ship],army2Argument:[Ship],completion:
             var army2 = army2Argument
             
             combat: for round in 0..<6{
-                print("round: \(round)")
+             //   print("round: \(round)")
                 
                 attackerShoots(attacker: army1, defenser: &army2)
                 attackerShoots(attacker: army2, defenser: &army1)
@@ -143,10 +143,10 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
             
             // si l'attaquant one shot le vaisseau, programmer son explosion, et passer au vaisseau attaquant suivant
             
-        /*    guard attackingShip.attack < shipAttacked.structure + shipAttacked.shield else{
-                defenserFighting[i].willExplode = true
-                continue attacking
-            } */
+           guard attackingShip.attack < defenser[i].structure + defenser[i].shield else{
+                defenser[i].willExplode = true
+                continue individualShipAttack
+            }
             
             // si l'attaquant ne oneshot pas, infliger dégats, et roll explosion si coque inférieure à 70%
             
