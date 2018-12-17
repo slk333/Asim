@@ -3,15 +3,20 @@ import Foundation
 
 let mySerialQueue = DispatchQueue(label: "mySerialQueue")
 
+let rfMatrix:[[Int]] = [[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[6,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,1],[1,1,1,1,1,1,2],[1,3,4,7,1,1,1]]
+
+
+
+
 
 func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion:@escaping((lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int),(lf: Int, hf: Int, cr: Int, bs: Int, bc: Int, bb: Int, de: Int))->())->(){
     
-    var army1Result=[Int]()
-    var army2Result=[Int]()
+    var army1Results=[Int]()
+    var army2Results=[Int]()
     var army1DictionaryResult:[ShipName:Int]=[.lightFighter:0,.heavyFighter:0,.cruiser:0,.battleShip:0,.battleCruiser:0,.bomber:0,.destroyer:0]
     var army2DictionaryResult:[ShipName:Int]=[.lightFighter:0,.heavyFighter:0,.cruiser:0,.battleShip:0,.battleCruiser:0,.bomber:0,.destroyer:0]
     
-    let shipOrder:[ShipName]=[.lightFighter,.heavyFighter,.cruiser,.battleShip,.battleCruiser,.bomber,.destroyer]
+    let shipsNameByOrder:[ShipName]=[.lightFighter,.heavyFighter,.cruiser,.battleShip,.battleCruiser,.bomber,.destroyer]
     
     
     
@@ -37,16 +42,20 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
                 attackerShoots(attacker: army1, defenser: &army2)
                 attackerShoots(attacker: army2, defenser: &army1)
                 
-                
-                army1 = army1.filter{$0.willExplode == false}
-                army2 = army2.filter{$0.willExplode == false}
-                
+                army1.removeAll{$0.willExplode == true}
+                army2.removeAll{$0.willExplode == true}
                 // si une armée est détruite, terminer la loop de combat
                 if army1.isEmpty || army2.isEmpty {break combat}
                 
                 // remettre les bouclier à fond
-                for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
-                for (index,ship) in army2.enumerated() {army2[index].shield = ship.completeShield}
+                for var ship in army1{
+                    ship.shield = ship.completeShield
+                }
+                for var ship in army2{
+                    ship.shield = ship.completeShield
+                }
+            //    for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
+            //    for (index,ship) in army2.enumerated() {army2[index].shield = ship.completeShield}
                 
                 // fin du round
                 
@@ -61,18 +70,22 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
                 
                 print(i)
                 // enregistrer le résultat du combat n
-                army1Result.append(army1.count)
-                army2Result.append(army2.count)
+                army1Results.append(army1.count)
+                army2Results.append(army2.count)
                 
-                for shipName in shipOrder{
-                    let numberOfShip = army1.prefix{$0.name == shipName}.count
-                    army1DictionaryResult[shipName]! += numberOfShip
-                    army1.removeSubrange(0..<numberOfShip)
+                for shipName in shipsNameByOrder{
+                    
+                    let totalCount = army1.count
+                    army1.removeAll{$0.name == shipName}
+                    let shipCount = totalCount - army1.count
+                    army1DictionaryResult[shipName]! += shipCount
+                
                 }
-                for shipName in shipOrder{
-                    let numberOfShip = army2.prefix{$0.name == shipName}.count
-                    army2DictionaryResult[shipName]! += numberOfShip
-                    army2.removeSubrange(0..<numberOfShip)
+                for shipName in shipsNameByOrder{
+                    let totalCount = army2.count
+                    army2.removeAll{$0.name == shipName}
+                    let shipCount = totalCount - army2.count
+                    army2DictionaryResult[shipName]! += shipCount
                 }
                 dispatchGroup.leave()
                 
@@ -101,8 +114,8 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
     dispatchGroup.notify(queue: .main){
         completion(resultAsTuple(dictionary:army1DictionaryResult),resultAsTuple(dictionary:army2DictionaryResult))
         print("\n")
-        print(army1Result)
-        print(army2Result)
+        print(army1Results)
+        print(army2Results)
     }
     
     
@@ -119,7 +132,7 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
 func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
     let defenserCount = defenser.count
     
-    var rf:Int?
+    var rf:Int!
    
 
         for attackingShip in attacker{
@@ -132,7 +145,8 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
             let i = Int.random(in: 0..<defenserCount)
          //   print("cible le \(defenser[i].name) numéro \(i)")
             
-            rf = attackingShip.rapidFireAgainst(ship: defenser[i]) ?? 1
+          //    rf = rfMatrix[attackingShip.id][defenser[i].id]
+           rf = attackingShip.rapidFireAgainst(ship: defenser[i]) ?? 1
             // si l'attaquant n'a pas de rapidfire, mettre fin à l'attaque individuelle du vaisseau
             
             
