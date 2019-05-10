@@ -40,15 +40,25 @@ class ViewController: UIViewController {
         var army2 = [Ship]()
         
       
-            
-            army1.append(contentsOf:Array(repeatElement(Ship(.lightFighter), count: Int(self.aLF.text ?? String(0)) ?? 0)))
+        
+        let count1 = Int(self.aLF.text ?? String(0))!
+        
+        army1.append(contentsOf: Array(repeatElement(LightFighter(), count: count1)))
+        
+        
+        /*
             army1.append(contentsOf:Array(repeatElement(Ship(.heavyFighter), count: Int(self.aHF.text ?? String(0)) ?? 0)))
             army1.append(contentsOf:Array(repeatElement(Ship(.cruiser), count: Int(self.aCR.text ?? String(0)) ?? 0)))
             army1.append(contentsOf:Array(repeatElement(Ship(.battleShip), count: Int(self.aBS.text ?? String(0)) ?? 0)))
             army1.append(contentsOf:Array(repeatElement(Ship(.battleCruiser), count: Int(self.aBC.text ?? String(0)) ?? 0)))
             army1.append(contentsOf:Array(repeatElement(Ship(.bomber), count: Int(self.aBB.text ?? String(0)) ?? 0)))
             army1.append(contentsOf:Array(repeatElement(Ship(.destroyer), count: Int(self.aDE.text ?? String(0)) ?? 0)))
+ */
         
+        
+        army2.append(contentsOf: Array(repeatElement(Cruiser(), count: Int(self.dCR.text ?? String(0)) ?? 0)))
+      
+        /*
         
             army2.append(contentsOf:Array(repeatElement(Ship(.lightFighter), count: Int(self.dLF.text ?? String(0)) ?? 0)))
             army2.append(contentsOf:Array(repeatElement(Ship(.heavyFighter), count: Int(self.dHF.text ?? String(0)) ?? 0)))
@@ -57,6 +67,7 @@ class ViewController: UIViewController {
             army2.append(contentsOf:Array(repeatElement(Ship(.battleCruiser), count: Int(self.dBC.text ?? String(0)) ?? 0)))
             army2.append(contentsOf:Array(repeatElement(Ship(.bomber), count: Int(self.dBB.text ?? String(0)) ?? 0)))
             army2.append(contentsOf:Array(repeatElement(Ship(.destroyer), count: Int(self.dDE.text ?? String(0)) ?? 0)))
+ */
         
         DispatchQueue.global().async {
             Asim.sim(army1Argument: army1, army2Argument: army2){

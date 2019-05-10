@@ -49,10 +49,10 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
                 
                 // remettre les bouclier à fond
                 for var ship in army1{
-                    ship.shield = ship.completeShield
+                    ship.shield = type(of: ship).completeShield
                 }
                 for var ship in army2{
-                    ship.shield = ship.completeShield
+                    ship.shield = type(of: ship).completeShield
                 }
             //    for (index,ship) in army1.enumerated() {army1[index].shield = ship.completeShield}
             //    for (index,ship) in army2.enumerated() {army2[index].shield = ship.completeShield}
@@ -76,14 +76,14 @@ func sim(numberOfSim:Int=20,army1Argument:[Ship],army2Argument:[Ship],completion
                 for shipName in shipsNameByOrder{
                     
                     let totalCount = army1.count
-                    army1.removeAll{$0.name == shipName}
+                    army1.removeAll{type(of:$0).name == shipName}
                     let shipCount = totalCount - army1.count
                     army1DictionaryResult[shipName]! += shipCount
                 
                 }
                 for shipName in shipsNameByOrder{
                     let totalCount = army2.count
-                    army2.removeAll{$0.name == shipName}
+                    army2.removeAll{type(of:$0).name == shipName}
                     let shipCount = totalCount - army2.count
                     army2DictionaryResult[shipName]! += shipCount
                 }
@@ -138,6 +138,9 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
         for attackingShip in attacker{
       //      print("\(attackingShip.name) now attacking")
            
+            let attackingType = type(of: attackingShip)
+            let attack = attackingType.attack
+            
           
         // choisir un vaisseau au hasard
         individualShipAttack: repeat{
@@ -146,7 +149,7 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
          //   print("cible le \(defenser[i].name) numéro \(i)")
             
           //    rf = rfMatrix[attackingShip.id][defenser[i].id]
-           rf = attackingShip.rapidFireAgainst(ship: defenser[i]) ?? 1
+            rf = attackingType.rapidFireAgainst(shipType: type(of:defenser[i])) ?? 1
             // si l'attaquant n'a pas de rapidfire, mettre fin à l'attaque individuelle du vaisseau
             
             
@@ -157,20 +160,20 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
             
             // si l'attaquant one shot le vaisseau, programmer son explosion, et passer au vaisseau attaquant suivant
             
-           guard attackingShip.attack < defenser[i].structure + defenser[i].shield else{
+           guard attack < defenser[i].structure + defenser[i].shield else{
                 defenser[i].willExplode = true
                 continue individualShipAttack
             }
             
             // si l'attaquant ne oneshot pas, infliger dégats, et roll explosion si coque inférieure à 70%
             
-            let remainingAttackForStructure = attackingShip.attack - defenser[i].shield
+            let remainingAttackForStructure = attack - defenser[i].shield
        //     print("\(remainingAttackForStructure) dégats vont s'appliquer sur la coque")
             
             // si l'attaquant n'inflige que des dégats au bouclier (celà ne l'empêchera pas d'exploser si il est déja endommagé)
             if remainingAttackForStructure <= 0 {
                 // diminuer le bouclier
-                defenser[i].shield -= attackingShip.attack
+                defenser[i].shield -= attack
         //    print("la coque est intacte et le bouclier du défendeur vaut désormais \(defenser[i].shield)")
             }
                 
@@ -193,12 +196,13 @@ func attackerShoots(attacker:[Ship], defenser:inout [Ship]){
        /*     print("""
                 la structure est \(defenser[i].structure) comparé à l'original de \(defenser[i].completeStructure!). Le seuil est à \(Int(Float(defenser[i].completeStructure) * 0.70))
                 """)
- */
-            if defenser[i].structure <= Int(Float(defenser[i].completeStructure) * 0.70){
+ */         let defCompleteStruct = type(of: defenser[i]).completeStructure
+            
+            if defenser[i].structure <= Int(Float(defCompleteStruct) * 0.70){
                 // il explosera si il n'arrive pas à dépasser le rand
                 // ce qui arrivera souvent si son coeff est faible
              //   print("le vaisseau est en zone de danger")
-                defenser[i].willExplode = defenser[i].completeStructure - defenser[i].structure > Int.random(in: 0..<defenser[i].completeStructure)
+                defenser[i].willExplode = defCompleteStruct - defenser[i].structure > Int.random(in: 0..<defCompleteStruct)
                 // il faut que le ship puisse survivre si il est à 1%. 1 n'est pas inférieur à 1, mais inférieur au dela
              //   print("le vaisseau va exploser : \(defenser[i].willExplode)")
             }

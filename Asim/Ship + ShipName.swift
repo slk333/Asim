@@ -1,5 +1,22 @@
 import Foundation
 
+
+
+protocol Ship {
+    static var attack:Int {get}
+    static var completeShield:Int {get}
+    static var completeStructure:Int {get}
+    static var name:ShipName {get}
+    
+    var shield : Int {get set}
+    var structure : Int {get set}
+    var willExplode : Bool {get set}
+    
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?
+
+}
+
+
 enum ShipName:Int{
     
     case lightFighter
@@ -11,7 +28,154 @@ enum ShipName:Int{
     case destroyer
 }
 
-struct Ship{
+struct LightFighter : Ship {
+    
+    static let attack = 50
+    static let completeShield = 10
+    static let completeStructure = 400
+    static let name = ShipName.lightFighter
+    
+    var shield = 10
+    var structure = 400
+    var willExplode = false
+    
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+struct HeavyFighter : Ship {
+    
+    static let attack = 150
+    static let completeShield = 25
+    static let completeStructure = 1000
+    static let name = ShipName.heavyFighter
+    
+    var shield = 25
+    var structure = 1000
+    var willExplode = false
+    
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+struct Cruiser : Ship {
+    
+    
+    
+    static let attack = 400
+    static let completeShield = 50
+    static let completeStructure = 2700
+    static let name = ShipName.cruiser
+    
+    var shield = 50
+    var structure = 2700
+    var willExplode = false
+    
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        if shipType.name == .lightFighter{return 6}
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+struct BattleShip : Ship {
+    
+    static let attack = 1000
+    static let completeShield = 200
+    static let completeStructure = 6000
+    static let name = ShipName.battleShip
+    
+    var shield = 200
+    var structure = 6000
+    var willExplode = false
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+struct Bomber : Ship {
+    
+    static let attack = 1000
+    static let completeShield = 500
+    static let completeStructure = 7500
+    static let name = ShipName.bomber
+    
+    var shield = 500
+    var structure = 7500
+    var willExplode = false
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+struct Destroyer : Ship {
+    
+    static let attack = 2000
+    static let completeShield = 500
+    static let completeStructure = 11000
+    static let name = ShipName.destroyer
+    
+    var shield = 500
+    var structure = 11000
+    var willExplode = false
+    
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        if shipType.name == .battleCruiser{return 2}
+        return nil
+    }
+    init(){
+        
+    }
+    
+}
+
+struct BattleCruiser : Ship {
+    
+    static let attack = 700
+    static let completeShield = 400
+    static let completeStructure = 7000
+    static let name = ShipName.battleCruiser
+    
+    var shield = 400
+    var structure = 7000
+    var willExplode = false
+    static func rapidFireAgainst(shipType:Ship.Type)->Int?{
+        // check du vaissau attaquant
+        if shipType.name == .battleShip{return 7}
+        if shipType.name == .cruiser{return 4}
+        if shipType.name == .heavyFighter{return 3}
+        return nil
+    }
+    init(){
+        
+    }
+}
+
+
+/*
+struct Ship111{
     let name:ShipName
  //   let id:Int
     let attack:Int
@@ -111,4 +275,6 @@ struct Ship{
     
     
     
+    
 }
+*/
